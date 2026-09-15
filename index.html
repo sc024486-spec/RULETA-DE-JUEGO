@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruleta del Juego</title>
+
+    <!-- Conectar el archivo CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <h1>🎡 Ruleta del Juego</h1>
+        <p>¡Gira la ruleta y descubre qué te toca!</p>
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+
+        <!-- Sección de la ruleta -->
+        <section class="ruleta-container">
+
+            <div class="ruleta">
+
+                <!-- Aquí aparecerán las opciones de la ruleta -->
+                <div class="opcion">Premio</div>
+                <div class="opcion">Reto</div>
+                <div class="opcion">Pregunta</div>
+                <div class="opcion">Sorpresa</div>
+                <div class="opcion">Premio</div>
+                <div class="opcion">Reto</div>
+                <div class="opcion">Pregunta</div>
+                <div class="opcion">Sorpresa</div>
+
+            </div>
+
+            <!-- Flecha que indica el resultado -->
+            <div class="flecha">▼</div>
+
+            <!-- Botón para girar -->
+            <button id="girar">🎯 GIRAR</button>
+
+        </section>
+
+        <!-- Resultado -->
+        <section class="resultado">
+            <h2>Resultado</h2>
+            <p id="resultado-texto">¡Gira la ruleta para comenzar!</p>
+        </section>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>🎮 Ruleta del Juego</p>
+    </footer>
+
+    <!-- Conectar JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>

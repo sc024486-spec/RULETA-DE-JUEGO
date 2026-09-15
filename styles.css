@@ -1,0 +1,350 @@
+```css
+/* ===== CONFIGURACIÓN GENERAL ===== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+
+/* ===== ENCABEZADO ===== */
+
+header {
+    padding: 30px 20px 20px;
+}
+
+header h1 {
+    font-size: clamp(28px, 5vw, 40px);
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: clamp(15px, 2.5vw, 18px);
+}
+
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 0 15px;
+}
+
+
+/* ===== CONTENEDOR DE LA RULETA ===== */
+
+.ruleta-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* ===== RULETA ===== */
+
+.ruleta {
+    /*
+       La ruleta se adapta automáticamente:
+       - En PC puede llegar hasta 400px
+       - En celular ocupa el espacio disponible
+    */
+    width: min(400px, 85vw);
+    height: min(400px, 85vw);
+
+    border-radius: 50%;
+    border: clamp(6px, 2vw, 10px) solid white;
+
+    background: conic-gradient(
+        #ff595e 0deg 45deg,
+        #ffca3a 45deg 90deg,
+        #8ac926 90deg 135deg,
+        #1982c4 135deg 180deg,
+        #6a4c93 180deg 225deg,
+        #ff595e 225deg 270deg,
+        #ffca3a 270deg 315deg,
+        #8ac926 315deg 360deg
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+}
+
+
+/* ===== OPCIONES ===== */
+
+.opcion {
+    position: absolute;
+
+    /*
+       El tamaño también se adapta.
+    */
+    width: clamp(70px, 20vw, 100px);
+
+    font-weight: bold;
+    font-size: clamp(11px, 2.5vw, 15px);
+
+    /*
+       La distancia desde el centro se calcula
+       proporcionalmente al tamaño de la ruleta.
+    */
+}
+
+
+/* ===== POSICIÓN DE CADA OPCIÓN ===== */
+
+.opcion:nth-child(1) {
+    transform: rotate(22.5deg) translateY(clamp(-145px, -31vw, -105px));
+}
+
+.opcion:nth-child(2) {
+    transform: rotate(67.5deg) translateY(clamp(-145px, -31vw, -105px));
+}
+
+.opcion:nth-child(3) {
+    transform: rotate(112.5deg) translateY(clamp(-145px, -31vw, -105px));
+}
+
+.opcion:nth-child(4) {
+    transform: rotate(157.5deg) translateY(clamp(-145px, -31vw, -105px));
+}
+
+.opcion:nth-child(5) {
+    transform: rotate(202.5deg) translateY(clamp(-145px, -31vw, -105px));
+}
+
+.opcion:nth-child(6) {
+    transform: rotate(247.5deg) translateY(clamp(-145px, -31vw, -105px));
+}
+
+.opcion:nth-child(7) {
+    transform: rotate(292.5deg) translateY(clamp(-145px, -31vw, -105px));
+}
+
+.opcion:nth-child(8) {
+    transform: rotate(337.5deg) translateY(clamp(-145px, -31vw, -105px));
+}
+
+
+/* ===== FLECHA ===== */
+
+.flecha {
+    position: absolute;
+
+    /*
+       Se adapta al tamaño de pantalla.
+    */
+    top: clamp(-8px, -1vw, -5px);
+
+    font-size: clamp(32px, 8vw, 45px);
+
+    color: white;
+
+    z-index: 10;
+
+    text-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ===== BOTÓN GIRAR ===== */
+
+#girAR,
+#girar {
+    margin-top: 30px;
+
+    padding: 15px 45px;
+
+    border: none;
+    border-radius: 30px;
+
+    background-color: white;
+    color: #764ba2;
+
+    font-size: clamp(16px, 4vw, 20px);
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+    transition: 0.3s;
+
+    /*
+       Evita que el botón se salga de pantallas pequeñas.
+    */
+    max-width: 90vw;
+}
+
+#girar:hover {
+    transform: scale(1.08);
+    background-color: #f1f1f1;
+}
+
+
+/* ===== RESULTADO ===== */
+
+.resultado {
+    width: min(500px, 90vw);
+
+    background-color: rgba(255, 255, 255, 0.15);
+
+    padding: 20px 30px;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+    /*
+       Permite que el texto se adapte.
+    */
+    overflow-wrap: break-word;
+}
+
+.resultado h2 {
+    margin-bottom: 10px;
+    font-size: clamp(20px, 4vw, 26px);
+}
+
+#resultado-texto {
+    font-size: clamp(15px, 3vw, 18px);
+    font-weight: bold;
+}
+
+
+/* ===== PIE DE PÁGINA ===== */
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+
+    background-color: rgba(0, 0, 0, 0.2);
+
+    font-size: clamp(14px, 2.5vw, 16px);
+}
+
+
+/* ================================================= */
+/* ===== CELULARES PEQUEÑOS ======================== */
+/* ================================================= */
+
+@media (max-width: 360px) {
+
+    header {
+        padding: 20px 10px 15px;
+    }
+
+    main {
+        padding: 0 10px;
+        gap: 25px;
+    }
+
+    .ruleta {
+        width: 85vw;
+        height: 85vw;
+    }
+
+    .opcion {
+        font-size: 10px;
+        width: 60px;
+    }
+
+    .opcion:nth-child(1),
+    .opcion:nth-child(2),
+    .opcion:nth-child(3),
+    .opcion:nth-child(4),
+    .opcion:nth-child(5),
+    .opcion:nth-child(6),
+    .opcion:nth-child(7),
+    .opcion:nth-child(8) {
+        transform-origin: center;
+    }
+
+    #girar {
+        padding: 13px 35px;
+    }
+
+    .resultado {
+        padding: 18px 15px;
+    }
+}
+
+
+/* ================================================= */
+/* ===== TABLETS =================================== */
+/* ================================================= */
+
+@media (min-width: 501px) and (max-width: 900px) {
+
+    .ruleta {
+        width: min(400px, 65vw);
+        height: min(400px, 65vw);
+    }
+
+    main {
+        gap: 35px;
+    }
+}
+
+
+/* ================================================= */
+/* ===== PANTALLAS GRANDES ========================= */
+/* ================================================= */
+
+@media (min-width: 1200px) {
+
+    main {
+        gap: 35px;
+    }
+
+    .ruleta {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+
+/* ================================================= */
+/* ===== EVITAR ANIMACIONES SI EL USUARIO LO PIDE == */
+/* ================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .ruleta {
+        transition: none;
+    }
+
+    #girar {
+        transition: none;
+    }
+}
+```
