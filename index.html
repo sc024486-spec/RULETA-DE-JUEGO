@@ -10,7 +10,10 @@
 </head>
 
 <body>
-
+       <img
+        src="logo-iglesia.png"
+        alt="Logo de la iglesia"
+    >
     <!-- Encabezado -->
     <header>
         <h1>🎡 Ruleta del Juego</h1>
@@ -41,7 +44,7 @@
             <div class="flecha">▼</div>
 
             <!-- Botón para girar -->
-            <button id="girar">🎯 GIRAR</button>
+        
 
         </section>
 
@@ -57,7 +60,25 @@
     <footer>
         <p>🎮 Ruleta del Juego</p>
     </footer>
+<!-- ===== VENTANA DEL RESULTADO ===== -->
 
+<div id="popup-resultado" class="popup-oculto">
+
+    <div class="popup-contenido">
+
+        <button id="cerrar-resultado">✕</button>
+
+        <div class="popup-icono">🎉</div>
+
+        <h2>¡RESULTADO!</h2>
+
+        <p id="resultado-grande"></p>
+
+        <div class="popup-confeti">✨ 🎊 ✨</div>
+
+    </div>
+
+</div>
     <!-- Conectar JavaScript -->
     <script src="script.js"></script>
 

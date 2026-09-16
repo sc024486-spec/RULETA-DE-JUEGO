@@ -1,4 +1,4 @@
-```css
+
 /* ===== CONFIGURACIÓN GENERAL ===== */
 
 * {
@@ -97,7 +97,7 @@ main {
 
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 
-    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    transition: none;
 }
 
 
@@ -178,8 +178,7 @@ main {
 
 /* ===== BOTÓN GIRAR ===== */
 
-#girAR,
-#girar {
+{
     margin-top: 30px;
 
     padding: 15px 45px;
@@ -348,3 +347,408 @@ footer {
     }
 }
 ```
+/* ========================================= */
+/* ===== LOGO DE LA IGLESIA ================ */
+/* ========================================= */
+
+#logotipo {
+    position: fixed !important;
+
+    width: 45px !important;
+    height: 45px !important;
+
+    max-width: 45px !important;
+    max-height: 45px !important;
+
+    top: 15px !important;
+    right: 15px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    object-fit: contain !important;
+
+    display: block !important;
+
+    z-index: 99999 !important;
+
+    pointer-events: none;
+
+    filter: drop-shadow(
+        0 2px 4px rgba(0, 0, 0, 0.35)
+    );
+}
+
+
+/* ===== CELULAR ===== */
+
+@media (max-width: 600px) {
+
+    #logotipo {
+
+        width: 35px !important;
+        height: 35px !important;
+
+        max-width: 35px !important;
+        max-height: 35px !important;
+
+        top: 10px !important;
+        right: 10px !important;
+    }
+}
+
+}
+/* ===== RULETA INTERACTIVA ===== */
+
+.ruleta {
+    cursor: grab;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: none;
+}
+
+.ruleta:active {
+    cursor: grabbing;
+}
+
+
+/* ===== INSTRUCCIÓN ===== */
+
+.instruccion {
+    margin-top: 18px;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    opacity: 0.9;
+}
+
+
+/* ===== CELULAR ===== */
+
+@media (max-width: 600px) {
+
+    .instruccion {
+        font-size: 13px;
+        margin-top: 15px;
+    }
+
+}
+.ruleta {
+    cursor: grab;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+
+    touch-action: none;
+
+    transition: none;
+}
+
+.ruleta:active {
+    cursor: grabbing;
+}
+/* ================================================= */
+/* ===== VENTANA SORPRESA DEL RESULTADO ============ */
+/* ================================================= */
+
+#popup-resultado {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 10000;
+
+    padding: 20px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity 0.3s ease;
+}
+
+
+/* ===== MOSTRAR ===== */
+
+#popup-resultado.mostrar {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+/* ===== CAJA ===== */
+
+.popup-contenido {
+    position: relative;
+
+    width: min(600px, 90vw);
+
+    padding: 50px 30px;
+
+    border-radius: 30px;
+
+    background: linear-gradient(
+        135deg,
+        #667eea,
+        #764ba2
+    );
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5);
+
+    text-align: center;
+
+    transform: scale(0.5) rotate(-5deg);
+
+    transition:
+        transform 0.5s cubic-bezier(
+            0.175,
+            0.885,
+            0.32,
+            1.275
+        );
+}
+
+
+/* ===== ANIMACIÓN DE ENTRADA ===== */
+
+#popup-resultado.mostrar .popup-contenido {
+
+    transform: scale(1) rotate(0deg);
+
+}
+
+
+/* ===== BOTÓN X ===== */
+
+#cerrar-resultado {
+
+    position: absolute;
+
+    top: 12px;
+    right: 15px;
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.2);
+
+    color: white;
+
+    font-size: 25px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+#cerrar-resultado:hover {
+
+    background: white;
+
+    color: #764ba2;
+
+    transform: rotate(90deg) scale(1.1);
+
+}
+
+
+/* ===== ICONO ===== */
+
+.popup-icono {
+
+    font-size: 80px;
+
+    margin-bottom: 10px;
+
+    animation: rebote 1s infinite alternate;
+}
+
+
+@keyframes rebote {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-12px);
+    }
+
+}
+
+
+/* ===== TITULO ===== */
+
+.popup-contenido h2 {
+
+    font-size: clamp(
+        28px,
+        6vw,
+        50px
+    );
+
+    margin-bottom: 15px;
+
+}
+
+
+/* ===== RESULTADO GRANDE ===== */
+
+#resultado-grande {
+
+    font-size: clamp(
+        40px,
+        10vw,
+        80px
+    );
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+
+    margin: 20px 0;
+
+    text-shadow:
+        0 5px 10px rgba(0, 0, 0, 0.4);
+
+    animation: aparecerResultado 0.7s
+        cubic-bezier(
+            0.175,
+            0.885,
+            0.32,
+            1.275
+        );
+}
+
+
+@keyframes aparecerResultado {
+
+    0% {
+
+        transform: scale(0);
+
+        opacity: 0;
+
+    }
+
+    70% {
+
+        transform: scale(1.2);
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        transform: scale(1);
+
+    }
+
+}
+
+
+/* ===== CONFETI ===== */
+
+.popup-confeti {
+
+    font-size: 35px;
+
+    margin-top: 15px;
+
+    animation: confeti 1s infinite alternate;
+
+}
+
+
+@keyframes confeti {
+
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.15);
+    }
+
+}
+
+
+/* ===== CELULAR ===== */
+
+@media (max-width: 600px) {
+
+    .popup-contenido {
+
+        padding: 45px 20px;
+
+        border-radius: 25px;
+
+    }
+
+    .popup-icono {
+
+        font-size: 60px;
+
+    }
+
+    #cerrar-resultado {
+
+        width: 40px;
+        height: 40px;
+
+        font-size: 22px;
+
+    }
+
+}
+/* =========================================
+   LOGO - FORZAR TAMAÑO Y POSICIÓN
+   ========================================= */
+
+body > img {
+    position: fixed !important;
+
+    width: 80px !important;
+    height: 80px !important;
+
+    min-width: 80px !important;
+    min-height: 80px !important;
+
+    max-width: 80px !important;
+    max-height: 80px !important;
+
+    top: 12px !important;
+    right: 12px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    object-fit: contain !important;
+
+    display: block !important;
+
+    z-index: 999999 !important;
+}
