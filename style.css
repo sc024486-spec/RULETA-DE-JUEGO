@@ -1,0 +1,1845 @@
+/* =========================================
+   GENERAL
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #111;
+    color: #111;
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   PANTALLA DE ENTRADA
+========================================= */
+
+#entrada {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    z-index: 99999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    background: #111;
+
+    transition: opacity 1s ease;
+}
+
+
+/* =========================================
+   LUZ DEL CENTRO
+========================================= */
+
+.luz {
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: #fff9c4;
+
+    filter: blur(35px);
+
+    box-shadow:
+        0 0 80px #fff,
+        0 0 160px #ffd700;
+
+    opacity: 0.9;
+
+    z-index: 1;
+}
+
+
+/* =========================================
+   PUERTAS
+========================================= */
+
+.puerta {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    width: 50%;
+
+    z-index: 10;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6b4c00,
+            #d4af37,
+            #fff0a0,
+            #c79b20,
+            #5c4200
+        );
+
+    box-shadow:
+        inset 0 0 40px rgba(0,0,0,0.6),
+        0 0 30px rgba(255,215,0,0.3);
+
+    transition:
+        transform 2s cubic-bezier(.77,0,.18,1);
+}
+
+
+/* Detalles */
+
+.puerta::before {
+    content: "✦";
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 70px;
+
+    color: rgba(255,255,255,0.8);
+
+    text-shadow:
+        0 0 15px #fff,
+        0 0 30px #ffd700;
+}
+
+
+/* Izquierda */
+
+.puerta-izquierda {
+    left: 0;
+
+    border-right: 4px solid #111;
+
+    transform-origin: left center;
+}
+
+.puerta-izquierda::before {
+    right: 20px;
+}
+
+
+/* Derecha */
+
+.puerta-derecha {
+    right: 0;
+
+    border-left: 4px solid #111;
+
+    transform-origin: right center;
+}
+
+.puerta-derecha::before {
+    left: 20px;
+}
+
+
+/* =========================================
+   PUERTAS ABIERTAS
+========================================= */
+
+#entrada.abierta .puerta-izquierda {
+    transform: translateX(-100%);
+}
+
+#entrada.abierta .puerta-derecha {
+    transform: translateX(100%);
+}
+
+
+/* =========================================
+   CONTENIDO BIENVENIDA
+========================================= */
+
+.contenido-entrada {
+
+    position: absolute;
+
+    z-index: 100;
+
+    width: 100%;
+    max-width: 700px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    text-align: center;
+
+    color: white;
+
+    padding: 20px;
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.8s ease;
+}
+
+
+/* Desaparece cuando se abren las puertas */
+
+#entrada.abierta .contenido-entrada {
+
+    opacity: 0;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1.15);
+
+}
+
+
+/* Cruz */
+
+.cruz {
+
+    font-size: 55px;
+
+    color: #ffd700;
+
+    margin-bottom: 10px;
+
+    text-shadow:
+        0 0 15px white,
+        0 0 30px #ffd700;
+}
+
+
+/* Título */
+
+.contenido-entrada h1 {
+
+    font-size: clamp(42px, 8vw, 75px);
+
+    line-height: 1.1;
+
+    margin-bottom: 15px;
+
+    color: white;
+
+    text-shadow:
+        0 4px 15px rgba(0,0,0,0.8);
+}
+
+
+/* Texto */
+
+.contenido-entrada p {
+
+    font-size: clamp(16px, 3vw, 21px);
+
+    margin-bottom: 35px;
+
+    color: white;
+
+    text-shadow:
+        0 2px 8px black;
+}
+
+
+/* =========================================
+   BOTON ENTRAR
+========================================= */
+
+#entrar {
+
+    position: relative;
+
+    z-index: 200;
+
+    padding: 15px 48px;
+
+    border: 2px solid #ffd700;
+
+    border-radius: 50px;
+
+    background: rgba(0,0,0,0.45);
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+#entrar:hover {
+
+    background: #ffd700;
+
+    color: #111;
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 0 30px #ffd700;
+}
+
+#entrar:active {
+
+    transform: scale(0.96);
+
+}
+
+
+/* =========================================
+   PAGINA PRINCIPAL
+========================================= */
+
+#pagina {
+
+    display: none;
+
+    min-height: 100vh;
+
+    position: relative;
+
+    padding: 90px 20px 30px;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,0.72),
+            rgba(255,255,255,0.72)
+        ),
+        url("FONDO.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-attachment: fixed;
+
+}
+
+
+/* Cuando se muestra */
+
+#pagina.mostrar {
+    display: block;
+    animation: aparecerPagina 1.2s ease;
+    position: relative;
+    z-index: 1;
+}
+
+
+@keyframes aparecerPagina {
+
+    from {
+        opacity: 0;
+        transform: scale(1.03);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo-iglesia {
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 420px;
+
+    z-index: 1;
+}
+
+.logo-iglesia img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+
+    /* Sin círculo, sin borde y sin sombra */
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    background: transparent;
+}
+
+
+/* =========================================
+   ENCABEZADO
+========================================= */
+
+.encabezado {
+
+    max-width: 800px;
+
+    margin: 0 auto 50px;
+
+    text-align: center;
+
+    animation:
+        aparecer 1.5s ease;
+}
+
+
+.cruz-pequena {
+
+    font-size: 42px;
+
+    color: #1c6b36;
+
+    margin-bottom: 10px;
+}
+
+
+.encabezado h1 {
+
+    font-size:
+        clamp(32px, 7vw, 55px);
+
+    color: #111;
+
+    margin-bottom: 15px;
+}
+
+
+.encabezado p {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+
+    max-width: 600px;
+
+    margin: auto;
+}
+
+
+/* =========================================
+   TARJETAS
+========================================= */
+
+.tarjetas-container {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 35px;
+}
+
+
+.tarjeta {
+
+    width: 100%;
+
+    perspective: 1200px;
+
+    min-height: 500px;
+}
+
+
+.tarjeta-interior {
+
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 500px;
+
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
+    transition:
+        transform 0.9s cubic-bezier(.4,.2,.2,1);
+
+}
+
+
+.tarjeta.volteada .tarjeta-interior {
+
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+
+}
+
+
+/* Frente y reverso */
+
+.tarjeta-frente,
+.tarjeta-reverso {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    min-height: 500px;
+
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    border: 6px solid #111;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    background: white;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,0.45);
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.tarjeta-reverso {
+
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+
+}
+
+
+/* Imágenes */
+
+.tarjeta-frente img,
+.tarjeta-reverso img {
+
+    display: block;
+
+    width: 100%;
+
+    flex: 1;
+
+    min-height: 420px;
+
+    object-fit: cover;
+}
+
+
+/* =========================================
+   BOTON TARJETAS
+========================================= */
+
+.boton-voltear {
+
+    width: 100%;
+
+    min-height: 65px;
+
+    border: none;
+
+    background: #1c6b36;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    font-family: Arial, sans-serif;
+
+    transition: 0.3s;
+}
+
+
+.boton-voltear:hover {
+
+    background: #ffd700;
+
+    color: #111;
+}
+
+/* =========================================
+   COMPARTIR
+========================================= */
+
+.compartir {
+
+    max-width: 700px;
+
+    margin: 80px auto 50px;
+
+    text-align: center;
+
+    padding: 40px 25px;
+
+    background:
+        rgba(255,255,255,0.9);
+
+    border: 4px solid #111;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,0.35);
+}
+
+
+.compartir h2 {
+
+    font-size: 30px;
+
+    margin-bottom: 12px;
+}
+
+
+.compartir p {
+
+    font-family: Arial, sans-serif;
+
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+}
+
+
+#botonCompartir {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 15px 35px;
+
+    border: 3px solid #111;
+
+    border-radius: 50px;
+
+    background: #ffd700;
+
+    color: #111;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+#botonCompartir:hover {
+
+    background: #1c6b36;
+
+    color: white;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.3);
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+
+    text-align: center;
+
+    padding: 30px 10px;
+
+    color: #111;
+
+    font-family: Arial, sans-serif;
+}
+
+
+footer div {
+
+    font-size: 30px;
+
+    color: #1c6b36;
+
+    margin-bottom: 8px;
+}
+
+
+/* =========================================
+   ANIMACIONES
+========================================= */
+
+@keyframes aparecer {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(30px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 700px) {
+
+    #pagina {
+
+        padding:
+            80px 12px 20px;
+
+        background-attachment:
+            scroll;
+    }
+
+
+    .logo-iglesia {
+
+        width: 60px;
+        height: 60px;
+
+        top: 12px;
+        right: 12px;
+
+        border-width: 2px;
+    }
+
+
+    .encabezado {
+
+        margin-bottom: 35px;
+    }
+
+
+    .encabezado h1 {
+
+        font-size: 34px;
+    }
+
+
+    .encabezado p {
+
+        font-size: 15px;
+    }
+
+
+    .tarjetas-container {
+
+        grid-template-columns: 1fr;
+
+        gap: 28px;
+    }
+
+
+    .tarjeta,
+    .tarjeta-interior,
+    .tarjeta-frente,
+    .tarjeta-reverso {
+
+        min-height: 470px;
+    }
+
+
+    .tarjeta-frente img,
+    .tarjeta-reverso img {
+
+        min-height: 400px;
+    }
+
+
+    .compartir {
+
+        margin-top: 60px;
+
+        padding: 30px 18px;
+    }
+
+
+    .compartir h2 {
+
+        font-size: 25px;
+    }
+
+}
+
+
+/* =========================================
+   CELULARES PEQUEÑOS
+========================================= */
+
+@media (max-width: 370px) {
+
+    .tarjeta,
+    .tarjeta-interior,
+    .tarjeta-frente,
+    .tarjeta-reverso {
+
+        min-height: 420px;
+    }
+
+
+    .tarjeta-frente img,
+    .tarjeta-reverso img {
+
+        min-height: 350px;
+    }
+
+}
+
+
+/* =========================================
+   ENTRADA
+========================================= */
+
+#entrada {
+    transition: opacity 1s ease;
+}
+
+#entrada.abierta {
+    pointer-events: none;
+}
+```css
+/* =========================================
+   ACCIONES - ORACIÓN + COMPARTIR
+========================================= */
+
+.acciones {
+
+    max-width: 950px;
+
+    margin: 80px auto 50px;
+
+    padding: 35px 25px;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+
+    background:
+        rgba(255,255,255,0.92);
+
+    border: 4px solid #111;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,0.35);
+
+}
+
+
+/* =========================================
+   CADA ACCIÓN
+========================================= */
+
+.accion {
+
+    text-align: center;
+
+    padding: 25px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.accion-icono {
+
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+
+.accion h2 {
+
+    font-size: 27px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.accion p {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+
+    max-width: 370px;
+
+    min-height: 78px;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =========================================
+   BOTONES
+========================================= */
+
+.boton-accion {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    min-width: 220px;
+
+    padding: 15px 28px;
+
+    border: 3px solid #111;
+
+    border-radius: 50px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+
+}
+
+
+/* Botón oración */
+
+.boton-oracion {
+
+    background: #1c6b36;
+
+    color: white;
+}
+
+
+.boton-oracion:hover {
+
+    background: #ffd700;
+
+    color: #111;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.3);
+
+}
+
+
+/* Botón compartir */
+
+.boton-compartir {
+
+    background: #ffd700;
+
+    color: #111;
+}
+
+
+.boton-compartir:hover {
+
+    background: #1c6b36;
+
+    color: white;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.3);
+
+}
+
+
+/* =========================================
+   VENTANA DEL FORMULARIO
+========================================= */
+
+.ventana-oracion {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,0.75);
+
+    backdrop-filter:
+        blur(5px);
+
+}
+
+
+.ventana-oracion.activa {
+
+    display: flex;
+
+}
+
+
+/* =========================================
+   CONTENEDOR FORMULARIO
+========================================= */
+
+.formulario-contenedor {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 650px;
+
+    max-height: 90vh;
+
+    overflow: hidden;
+
+    background: white;
+
+    border: 5px solid #111;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.6);
+
+    animation:
+        aparecerFormulario 0.35s ease;
+
+}
+
+
+@keyframes aparecerFormulario {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            scale(0.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================
+   TITULO DEL FORMULARIO
+========================================= */
+
+.formulario-titulo {
+
+    text-align: center;
+
+    padding: 25px 45px 10px;
+
+}
+
+
+.formulario-titulo > div {
+
+    font-size: 38px;
+
+    margin-bottom: 5px;
+
+}
+
+
+.formulario-titulo h2 {
+
+    font-size: 28px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.formulario-titulo p {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin: 0;
+
+}
+
+
+/* =========================================
+   CERRAR
+========================================= */
+
+.cerrar-oracion {
+
+    position: absolute;
+
+    top: 12px;
+
+    right: 15px;
+
+    z-index: 10;
+
+    width: 40px;
+
+    height: 40px;
+
+    border: 2px solid #111;
+
+    border-radius: 50%;
+
+    background: white;
+
+    color: #111;
+
+    font-size: 28px;
+
+    line-height: 30px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+.cerrar-oracion:hover {
+
+    background: #111;
+
+    color: white;
+
+    transform: rotate(90deg);
+
+}
+
+
+/* =========================================
+   IFRAME GOOGLE FORMS
+========================================= */
+
+.formulario-contenedor iframe {
+
+    display: block;
+
+    width: 100%;
+
+    height: 650px;
+
+    border: none;
+
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 700px) {
+
+    .acciones {
+
+        grid-template-columns: 1fr;
+
+        gap: 0;
+
+        margin-top: 60px;
+
+        padding: 25px 15px;
+
+    }
+
+
+    .accion {
+
+        padding: 25px 10px;
+
+    }
+
+
+    .accion:first-child {
+
+        border-bottom:
+            2px solid rgba(0,0,0,0.15);
+
+        padding-bottom: 35px;
+
+    }
+
+
+    .accion:last-child {
+
+        padding-top: 35px;
+
+    }
+
+
+    .accion h2 {
+
+        font-size: 24px;
+
+    }
+
+
+    .accion p {
+
+        min-height: auto;
+
+        font-size: 15px;
+
+    }
+
+
+    .boton-accion {
+
+        width: 100%;
+
+        max-width: 300px;
+
+    }
+
+
+    .ventana-oracion {
+
+        padding: 10px;
+
+    }
+
+
+    .formulario-contenedor {
+
+        max-height: 94vh;
+
+        border-width: 3px;
+
+        border-radius: 18px;
+
+    }
+
+
+    .formulario-titulo {
+
+        padding:
+            20px 40px 5px;
+
+    }
+
+
+    .formulario-titulo h2 {
+
+        font-size: 23px;
+
+    }
+
+
+    .formulario-titulo p {
+
+        font-size: 13px;
+
+    }
+
+
+    .formulario-contenedor iframe {
+
+        height: 600px;
+
+    }
+    
+
+}
+```css
+/* =========================================
+   ACCIONES - ORACIÓN + COMPARTIR
+========================================= */
+
+.acciones {
+
+    max-width: 950px;
+
+    margin: 80px auto 50px;
+
+    padding: 35px 25px;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+
+    background:
+        rgba(255,255,255,0.92);
+
+    border: 4px solid #111;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,0.35);
+
+}
+
+
+/* =========================================
+   CADA ACCIÓN
+========================================= */
+
+.accion {
+
+    text-align: center;
+
+    padding: 25px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.accion-icono {
+
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+
+.accion h2 {
+
+    font-size: 27px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.accion p {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+
+    max-width: 370px;
+
+    min-height: 78px;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =========================================
+   BOTONES
+========================================= */
+
+.boton-accion {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    min-width: 220px;
+
+    padding: 15px 28px;
+
+    border: 3px solid #111;
+
+    border-radius: 50px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+
+}
+
+
+/* Botón oración */
+
+.boton-oracion {
+
+    background: #1c6b36;
+
+    color: white;
+}
+
+
+.boton-oracion:hover {
+
+    background: #ffd700;
+
+    color: #111;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.3);
+
+}
+
+
+/* Botón compartir */
+
+.boton-compartir {
+
+    background: #ffd700;
+
+    color: #111;
+}
+
+
+.boton-compartir:hover {
+
+    background: #1c6b36;
+
+    color: white;
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.3);
+
+}
+
+
+/* =========================================
+   VENTANA DEL FORMULARIO
+========================================= */
+
+.ventana-oracion {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,0.75);
+
+    backdrop-filter:
+        blur(5px);
+
+}
+
+
+.ventana-oracion.activa {
+
+    display: flex;
+
+}
+
+
+/* =========================================
+   CONTENEDOR FORMULARIO
+========================================= */
+
+.formulario-contenedor {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 650px;
+
+    max-height: 90vh;
+
+    overflow: auto;
+
+    background: white;
+
+    border: 5px solid #111;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.6);
+
+    animation:
+        aparecerFormulario 0.35s ease;
+
+}
+
+
+@keyframes aparecerFormulario {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            scale(0.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================
+   TITULO DEL FORMULARIO
+========================================= */
+
+.formulario-titulo {
+
+    text-align: center;
+
+    padding: 25px 45px 10px;
+
+}
+
+
+.formulario-titulo > div {
+
+    font-size: 38px;
+
+    margin-bottom: 5px;
+
+}
+
+
+.formulario-titulo h2 {
+
+    font-size: 28px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.formulario-titulo p {
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin: 0;
+
+}
+
+
+/* =========================================
+   CERRAR
+========================================= */
+
+.cerrar-oracion {
+
+    position: absolute;
+
+    top: 12px;
+
+    right: 15px;
+
+    z-index: 10;
+
+    width: 40px;
+
+    height: 40px;
+
+    border: 2px solid #111;
+
+    border-radius: 50%;
+
+    background: white;
+
+    color: #111;
+
+    font-size: 28px;
+
+    line-height: 30px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+.cerrar-oracion:hover {
+
+    background: #111;
+
+    color: white;
+
+    transform: rotate(90deg);
+
+}
+
+
+/* =========================================
+   IFRAME GOOGLE FORMS
+========================================= */
+
+.formulario-contenedor iframe {
+
+    display: block;
+
+    width: 100%;
+
+    height: 750px;
+
+    border: none;
+
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 700px) {
+
+    .acciones {
+
+        grid-template-columns: 1fr;
+
+        gap: 0;
+
+        margin-top: 60px;
+
+        padding: 25px 15px;
+
+    }
+
+
+    .accion {
+
+        padding: 25px 10px;
+
+    }
+
+
+    .accion:first-child {
+
+        border-bottom:
+            2px solid rgba(0,0,0,0.15);
+
+        padding-bottom: 35px;
+
+    }
+
+
+    .accion:last-child {
+
+        padding-top: 35px;
+
+    }
+
+
+    .accion h2 {
+
+        font-size: 24px;
+
+    }
+
+
+    .accion p {
+
+        min-height: auto;
+
+        font-size: 15px;
+
+    }
+
+
+    .boton-accion {
+
+        width: 100%;
+
+        max-width: 300px;
+
+    }
+
+
+    .ventana-oracion {
+
+        padding: 10px;
+
+    }
+
+
+    .formulario-contenedor {
+
+        max-height: 94vh;
+
+        border-width: 3px;
+
+        border-radius: 18px;
+
+    }
+
+
+    .formulario-titulo {
+
+        padding:
+            20px 40px 5px;
+
+    }
+
+
+    .formulario-titulo h2 {
+
+        font-size: 23px;
+
+    }
+
+
+    .formulario-titulo p {
+
+        font-size: 13px;
+
+    }
+
+
+    .formulario-contenedor iframe {
+
+        height: 800px;
+
+    }
+
+}
+```
+
+```
