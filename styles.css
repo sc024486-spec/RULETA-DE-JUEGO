@@ -737,7 +737,7 @@ body > img {
     min-width: 70px !important;
     min-height: 70px !important;
 
-    max-width: 87px !important;
+    max-width: 70px !important;
     max-height: 70px !important;
 
     top: 12px !important;
@@ -751,4 +751,23 @@ body > img {
     display: block !important;
 
     z-index: 999999 !important;
+}
+/* ===== LOGO MÁS PEQUEÑO EN CELULAR ===== */
+
+@media (max-width: 40px) {
+
+    body > img {
+        width: 40px !important;
+        height: 40px !important;
+
+        min-width: 40px !important;
+        min-height: 40px !important;
+
+        max-width: 40px !important;
+        max-height: 40px !important;
+
+        top: 10px !important;
+        right: 5px !important;
+    }
+
 }
