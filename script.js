@@ -6,16 +6,43 @@ const resultadoTexto = document.getElementById("resultado-texto");
 // OPCIONES
 // ==================================================
 
-const opciones = [
-    "Premio",
-    "Reto",
-    "Pregunta",
-    "Sorpresa",
-    "Premio",
-    "Reto",
-    "Pregunta",
-    "Sorpresa"
-];
+// Tomar automáticamente las opciones del HTML
+const elementosOpciones =
+    document.querySelectorAll(".ruleta .opcion");
+
+const opciones =
+    Array.from(elementosOpciones).map(
+        opcion => opcion.textContent.trim()
+    );
+
+
+// ==================================================
+// CONFIGURAR LAS OPCIONES EN LA RULETA
+// ==================================================
+
+// Como ahora son 12:
+// 360 / 12 = 30 grados por opción
+const gradosSegmento =
+    360 / opciones.length;
+
+
+// Colocar cada texto en el centro de su segmento
+elementosOpciones.forEach(
+    (opcion, indice) => {
+
+        const angulo =
+            (indice * gradosSegmento) +
+            (gradosSegmento / 2);
+
+        opcion.style.transform =
+            `rotate(${angulo}deg)
+             translateY(clamp(-138px, -29vw, -96px))`;
+
+        opcion.style.transformOrigin =
+            "center";
+
+    }
+);
 
 
 // ==================================================
@@ -40,7 +67,6 @@ let animacion = null;
 
 let audioContext = null;
 
-const gradosSegmento = 45;
 
 // Segmento anterior
 let ultimoSegmento = 0;
@@ -55,12 +81,17 @@ function sonidoClac() {
     if (!audioContext) {
 
         audioContext =
-            new (window.AudioContext ||
-                window.webkitAudioContext)();
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
     }
 
 
-    if (audioContext.state === "suspended") {
+    if (
+        audioContext.state ===
+        "suspended"
+    ) {
 
         audioContext.resume();
 
@@ -80,7 +111,8 @@ function sonidoClac() {
 
 
     // Sonido tipo CLAC
-    oscilador.type = "square";
+    oscilador.type =
+        "square";
 
 
     oscilador.frequency.setValueAtTime(
@@ -107,14 +139,20 @@ function sonidoClac() {
     );
 
 
-    oscilador.connect(ganancia);
+    oscilador.connect(
+        ganancia
+    );
+
 
     ganancia.connect(
         audioContext.destination
     );
 
 
-    oscilador.start(ahora);
+    oscilador.start(
+        ahora
+    );
+
 
     oscilador.stop(
         ahora + 0.05
@@ -144,6 +182,7 @@ function comprobarClac() {
 
         ultimoSegmento =
             segmentoActual;
+
     }
 }
 
@@ -163,13 +202,18 @@ ruleta.addEventListener(
         if (!audioContext) {
 
             audioContext =
-                new (window.AudioContext ||
-                    window.webkitAudioContext)();
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
 
         }
 
 
-        if (audioContext.state === "suspended") {
+        if (
+            audioContext.state ===
+            "suspended"
+        ) {
 
             audioContext.resume();
 
@@ -177,20 +221,26 @@ ruleta.addEventListener(
 
 
         // Detener inercia anterior
-        cancelAnimationFrame(animacion);
+        cancelAnimationFrame(
+            animacion
+        );
 
 
-        arrastrando = true;
+        arrastrando =
+            true;
 
-        velocidad = 0;
-
-
-        ultimoX = e.clientX;
-
-        ultimoY = e.clientY;
+        velocidad =
+            0;
 
 
-        // Capturar el dedo / mouse
+        ultimoX =
+            e.clientX;
+
+        ultimoY =
+            e.clientY;
+
+
+        // Capturar dedo / mouse
         ruleta.setPointerCapture(
             e.pointerId
         );
@@ -198,6 +248,7 @@ ruleta.addEventListener(
 
         ruleta.style.cursor =
             "grabbing";
+
     }
 );
 
@@ -210,7 +261,8 @@ ruleta.addEventListener(
     "pointermove",
     function (e) {
 
-        if (!arrastrando) return;
+        if (!arrastrando)
+            return;
 
 
         e.preventDefault();
@@ -232,47 +284,66 @@ ruleta.addEventListener(
 
         // Posición anterior
         const x1 =
-            ultimoX - centroX;
+            ultimoX -
+            centroX;
 
         const y1 =
-            ultimoY - centroY;
+            ultimoY -
+            centroY;
 
 
         // Posición actual
         const x2 =
-            e.clientX - centroX;
+            e.clientX -
+            centroX;
 
         const y2 =
-            e.clientY - centroY;
+            e.clientY -
+            centroY;
 
 
         // Ángulo anterior
         let angulo1 =
-            Math.atan2(y1, x1);
+            Math.atan2(
+                y1,
+                x1
+            );
 
 
         // Ángulo actual
         let angulo2 =
-            Math.atan2(y2, x2);
+            Math.atan2(
+                y2,
+                x2
+            );
 
 
         // Diferencia
         let diferencia =
-            angulo2 - angulo1;
+            angulo2 -
+            angulo1;
 
 
         // Corregir salto
-        if (diferencia > Math.PI) {
+        if (
+            diferencia >
+            Math.PI
+        ) {
 
             diferencia -=
                 Math.PI * 2;
+
         }
 
 
-        if (diferencia < -Math.PI) {
+        if (
+            diferencia <
+            -Math.PI
+        ) {
 
             diferencia +=
                 Math.PI * 2;
+
         }
 
 
@@ -284,7 +355,8 @@ ruleta.addEventListener(
 
 
         // Girar
-        rotacion += grados;
+        rotacion +=
+            grados;
 
 
         ruleta.style.transform =
@@ -302,12 +374,15 @@ ruleta.addEventListener(
         // VELOCIDAD
         // ==========================================
 
-        velocidad = grados;
+        velocidad =
+            grados;
 
 
-        ultimoX = e.clientX;
+        ultimoX =
+            e.clientX;
 
-        ultimoY = e.clientY;
+        ultimoY =
+            e.clientY;
 
     }
 );
@@ -321,10 +396,12 @@ ruleta.addEventListener(
     "pointerup",
     function (e) {
 
-        if (!arrastrando) return;
+        if (!arrastrando)
+            return;
 
 
-        arrastrando = false;
+        arrastrando =
+            false;
 
 
         try {
@@ -333,7 +410,8 @@ ruleta.addEventListener(
                 e.pointerId
             );
 
-        } catch (error) {
+        }
+        catch (error) {
 
             // No hacer nada
 
@@ -349,26 +427,38 @@ ruleta.addEventListener(
         // ==========================================
 
         let impulso =
-            velocidad * 1.8;
+            velocidad *
+            1.8;
 
 
         // Limitar velocidad
-        if (impulso > 20) {
+        if (
+            impulso >
+            20
+        ) {
 
-            impulso = 20;
+            impulso =
+                20;
 
         }
 
 
-        if (impulso < -20) {
+        if (
+            impulso <
+            -20
+        ) {
 
-            impulso = -20;
+            impulso =
+                -20;
 
         }
 
 
         // Si casi no se movió
-        if (Math.abs(impulso) < 0.2) {
+        if (
+            Math.abs(impulso) <
+            0.2
+        ) {
 
             mostrarResultado();
 
@@ -377,7 +467,9 @@ ruleta.addEventListener(
         }
 
 
-        iniciarInercia(impulso);
+        iniciarInercia(
+            impulso
+        );
 
     }
 );
@@ -391,7 +483,8 @@ ruleta.addEventListener(
     "pointercancel",
     function () {
 
-        arrastrando = false;
+        arrastrando =
+            false;
 
         ruleta.style.cursor =
             "grab";
@@ -404,20 +497,25 @@ ruleta.addEventListener(
 // INERCIA
 // ==================================================
 
-function iniciarInercia(impulso) {
+function iniciarInercia(
+    impulso
+) {
 
-    const friccion = 0.985;
+    const friccion =
+        0.985;
 
 
     function animar() {
 
 
         // Reducir velocidad
-        impulso *= friccion;
+        impulso *=
+            friccion;
 
 
         // Girar
-        rotacion += impulso;
+        rotacion +=
+            impulso;
 
 
         ruleta.style.transform =
@@ -436,16 +534,19 @@ function iniciarInercia(impulso) {
         // ==========================================
 
         if (
-            Math.abs(impulso) < 0.05
+            Math.abs(impulso) <
+            0.05
         ) {
 
-            velocidad = 0;
+            velocidad =
+                0;
 
 
             mostrarResultado();
 
 
             return;
+
         }
 
 
@@ -453,6 +554,7 @@ function iniciarInercia(impulso) {
             requestAnimationFrame(
                 animar
             );
+
     }
 
 
@@ -460,6 +562,7 @@ function iniciarInercia(impulso) {
         requestAnimationFrame(
             animar
         );
+
 }
 
 
@@ -469,23 +572,50 @@ function iniciarInercia(impulso) {
 
 function mostrarResultado() {
 
-    let posicion =
+    // Normalizar rotación entre 0 y 360
+    const rotacionNormalizada =
         (
-            (360 -
-                (rotacion % 360)
-            ) + 360
+            (rotacion % 360) +
+            360
         ) % 360;
 
 
-    const numero =
+    // Saber qué parte está debajo de la flecha
+    const posicion =
+        (
+            360 -
+            rotacionNormalizada
+        ) % 360;
+
+
+    // Ahora usa automáticamente 30 grados
+    // porque existen 12 opciones
+    let numero =
         Math.floor(
-            posicion / 45
+            posicion /
+            gradosSegmento
         );
+
+
+    // Seguridad
+    if (
+        numero >=
+        opciones.length
+    ) {
+
+        numero =
+            0;
+
+    }
 
 
     const resultado =
         opciones[numero];
 
+
+    // ==========================================
+    // RESULTADO DE ABAJO
+    // ==========================================
 
     resultadoTexto.textContent =
         "🎉 ¡Te salió: " +
@@ -509,7 +639,10 @@ function mostrarResultado() {
         );
 
 
-    if (popup && resultadoGrande) {
+    if (
+        popup &&
+        resultadoGrande
+    ) {
 
         resultadoGrande.textContent =
             resultado;
@@ -518,6 +651,7 @@ function mostrarResultado() {
         popup.classList.add(
             "mostrar"
         );
+
     }
 
 }
@@ -539,7 +673,9 @@ const botonCerrar =
     );
 
 
-if (botonCerrar) {
+if (
+    botonCerrar
+) {
 
     botonCerrar.addEventListener(
         "click",

@@ -27,15 +27,19 @@ body {
 
 header {
     padding: 30px 20px 20px;
+    text-align: center;
+    padding: 0 70px
+
+
 }
 
 header h1 {
-    font-size: clamp(28px, 5vw, 40px);
+    font-size: clamp(18px, 5vw, 28px);
     margin-bottom: 10px;
 }
 
 header p {
-    font-size: clamp(15px, 2.5vw, 18px);
+    font-size: clamp(18px, 2.5vw, 28px);
 }
 
 
@@ -79,15 +83,19 @@ main {
     border: clamp(6px, 2vw, 10px) solid white;
 
     background: conic-gradient(
-        #ff595e 0deg 45deg,
-        #ffca3a 45deg 90deg,
-        #8ac926 90deg 135deg,
-        #1982c4 135deg 180deg,
-        #6a4c93 180deg 225deg,
-        #ff595e 225deg 270deg,
-        #ffca3a 270deg 315deg,
-        #8ac926 315deg 360deg
-    );
+    #ff595e 0deg 30deg,
+    #ffca3a 30deg 60deg,
+    #8ac926 60deg 90deg,
+    #1982c4 90deg 120deg,
+    #6a4c93 120deg 150deg,
+    #ff595e 150deg 180deg,
+    #ffca3a 180deg 210deg,
+    #8ac926 210deg 240deg,
+    #1982c4 240deg 270deg,
+    #6a4c93 270deg 300deg,
+    #ff595e 300deg 330deg,
+    #ffca3a 330deg 360deg
+);
 
     display: flex;
     align-items: center;
@@ -103,56 +111,77 @@ main {
 
 /* ===== OPCIONES ===== */
 
-.opcion {
+    .opcion {
     position: absolute;
 
-    /*
-       El tamaño también se adapta.
-    */
-    width: clamp(70px, 20vw, 100px);
+    width: clamp(58px, 16vw, 76px);
 
     font-weight: bold;
-    font-size: clamp(11px, 2.5vw, 15px);
+    font-size: clamp(9px, 2.1vw, 11px);
+
+    line-height: 1.05;
+
+    text-align: center;
+
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
 
     /*
        La distancia desde el centro se calcula
        proporcionalmente al tamaño de la ruleta.
     */
-}
 
 
 /* ===== POSICIÓN DE CADA OPCIÓN ===== */
 
+
 .opcion:nth-child(1) {
-    transform: rotate(22.5deg) translateY(clamp(-145px, -31vw, -105px));
+    transform: rotate(15deg) translateY(clamp(-138px, -29vw, -96px)) !important;
 }
 
 .opcion:nth-child(2) {
-    transform: rotate(67.5deg) translateY(clamp(-145px, -31vw, -105px));
+    transform: rotate(45deg) translateY(clamp(-138px, -29vw, -96px));
 }
 
 .opcion:nth-child(3) {
-    transform: rotate(112.5deg) translateY(clamp(-145px, -31vw, -105px));
+    transform: rotate(75deg) translateY(clamp(-138px, -29vw, -96px));
 }
 
 .opcion:nth-child(4) {
-    transform: rotate(157.5deg) translateY(clamp(-145px, -31vw, -105px));
+    transform: rotate(105deg) translateY(clamp(-138px, -29vw, -96px));
 }
 
 .opcion:nth-child(5) {
-    transform: rotate(202.5deg) translateY(clamp(-145px, -31vw, -105px));
+    transform: rotate(135deg) translateY(clamp(-138px, -29vw, -96px));
 }
 
 .opcion:nth-child(6) {
-    transform: rotate(247.5deg) translateY(clamp(-145px, -31vw, -105px));
+    transform: rotate(165deg) translateY(clamp(-138px, -29vw, -96px));
 }
 
 .opcion:nth-child(7) {
-    transform: rotate(292.5deg) translateY(clamp(-145px, -31vw, -105px));
+    transform: rotate(195deg) translateY(clamp(-138px, -29vw, -96px));
 }
 
 .opcion:nth-child(8) {
-    transform: rotate(337.5deg) translateY(clamp(-145px, -31vw, -105px));
+    transform: rotate(225deg) translateY(clamp(-138px, -29vw, -96px));
+}
+
+.opcion:nth-child(9) {
+    transform: rotate(255deg) translateY(clamp(-138px, -29vw, -96px));
+}
+
+.opcion:nth-child(10) {
+    transform: rotate(285deg) translateY(clamp(-138px, -29vw, -96px));
+}
+
+.opcion:nth-child(11) {
+    transform: rotate(315deg) translateY(clamp(-138px, -29vw, -96px));
+}
+
+.opcion:nth-child(12) {
+    transform: rotate(345deg) translateY(clamp(-138px, -29vw, -96px));
 }
 
 
@@ -256,7 +285,7 @@ footer {
 /* ===== CELULARES PEQUEÑOS ======================== */
 /* ================================================= */
 
-@media (max-width: 360px) {
+@media (max-width: 360px) 
 
     header {
         padding: 20px 10px 15px;
@@ -277,15 +306,21 @@ footer {
         width: 60px;
     }
 
-    .opcion:nth-child(1),
-    .opcion:nth-child(2),
-    .opcion:nth-child(3),
-    .opcion:nth-child(4),
-    .opcion:nth-child(5),
-    .opcion:nth-child(6),
-    .opcion:nth-child(7),
-    .opcion:nth-child(8) {
-        transform-origin: center;
+ .opcion:nth-child(1),
+ .opcion:nth-child(2),
+ .opcion:nth-child(3),
+ .opcion:nth-child(4),
+ .opcion:nth-child(5),
+ .opcion:nth-child(6),
+ .opcion:nth-child(7),
+ .opcion:nth-child(8),
+ .opcion:nth-child(9),
+ .opcion:nth-child(10),
+ .opcion:nth-child(11),
+ .opcion:nth-child(12) {
+    transform-origin: center;
+}
+}
     }
 
     #girar {
@@ -617,22 +652,16 @@ footer {
 /* ===== RESULTADO GRANDE ===== */
 
 #resultado-grande {
-
-    font-size: clamp(
-        40px,
-        10vw,
-        80px
-    );
-
+    font-size: clamp(22px, 6vw, 42px);
     font-weight: 900;
-
     text-transform: uppercase;
-
     margin: 20px 0;
-
-    text-shadow:
-        0 5px 10px rgba(0, 0, 0, 0.4);
-
+    line-height: 1.1;
+    text-align: center;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    padding: 0 20px;
+    text-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
     animation: aparecerResultado 0.7s
         cubic-bezier(
             0.175,
