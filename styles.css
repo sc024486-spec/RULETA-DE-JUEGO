@@ -1,5 +1,6 @@
-
-/* ===== CONFIGURACIÓN GENERAL ===== */
+/* ==================================================
+   CONFIGURACIÓN GENERAL
+================================================== */
 
 * {
     margin: 0;
@@ -16,51 +17,61 @@ body {
     font-family: Arial, sans-serif;
     min-height: 100vh;
     width: 100%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+
+    background: linear-gradient(
+        135deg,
+        #667eea,
+        #764ba2
+    );
+
     color: white;
     text-align: center;
+
     overflow-x: hidden;
 }
 
 
-/* ===== ENCABEZADO ===== */
+/* ==================================================
+   ENCABEZADO
+================================================== */
 
 header {
-    padding: 30px 20px 20px;
-    text-align: center;
-    padding: 0 70px
-
-
+    width: 100%;
+    padding: 10px 80px 15px;
 }
 
 header h1 {
-    font-size: clamp(18px, 5vw, 28px);
-    margin-bottom: 10px;
-}
-
-header p {
-    font-size: clamp(18px, 2.5vw, 28px);
+    font-size: clamp(25px, 4vw, 38px);
+    font-weight: 800;
 }
 
 
-/* ===== CONTENIDO PRINCIPAL ===== */
+/* ==================================================
+   CONTENIDO
+================================================== */
 
 main {
     width: 100%;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+
     gap: 30px;
-    padding: 0 15px;
+
+    padding: 0 10px 30px;
 }
 
 
-/* ===== CONTENEDOR DE LA RULETA ===== */
+/* ==================================================
+   CONTENEDOR RULETA
+================================================== */
 
 .ruleta-container {
     position: relative;
+
     width: 100%;
-    max-width: 500px;
+    max-width: 700px;
 
     display: flex;
     flex-direction: column;
@@ -68,427 +79,220 @@ main {
 }
 
 
-/* ===== RULETA ===== */
+/* ==================================================
+   RULETA
+================================================== */
 
 .ruleta {
     /*
-       La ruleta se adapta automáticamente:
-       - En PC puede llegar hasta 400px
-       - En celular ocupa el espacio disponible
+        PC: máximo 620px
+        celular: casi todo el ancho de pantalla
     */
-    width: min(400px, 85vw);
-    height: min(400px, 85vw);
+
+    width: min(620px, 94vw);
+    height: min(620px, 94vw);
 
     border-radius: 50%;
-    border: clamp(6px, 2vw, 10px) solid white;
 
-    background: conic-gradient(
-    #ff595e 0deg 30deg,
-    #ffca3a 30deg 60deg,
-    #8ac926 60deg 90deg,
-    #1982c4 90deg 120deg,
-    #6a4c93 120deg 150deg,
-    #ff595e 150deg 180deg,
-    #ffca3a 180deg 210deg,
-    #8ac926 210deg 240deg,
-    #1982c4 240deg 270deg,
-    #6a4c93 270deg 300deg,
-    #ff595e 300deg 330deg,
-    #ffca3a 330deg 360deg
-);
+    border: clamp(7px, 1.5vw, 12px)
+        solid white;
+
+    position: relative;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    position: relative;
+    overflow: hidden;
 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow:
+        0 12px 35px
+        rgba(0, 0, 0, 0.35);
+
+    cursor: grab;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: none;
 
     transition: none;
 }
 
+.ruleta:active {
+    cursor: grabbing;
+}
 
-/* ===== OPCIONES ===== */
 
-    .opcion {
+/* ==================================================
+   TEXTOS DE LAS OPCIONES
+================================================== */
+
+.opcion {
     position: absolute;
 
-    width: clamp(58px, 16vw, 76px);
+    /*
+       Un poco más estrecho para que entre
+       bien dentro de los segmentos.
+    */
+    width: clamp(
+        62px,
+        14vw,
+        100px
+    );
 
-    font-weight: bold;
-    font-size: clamp(9px, 2.1vw, 11px);
+    font-size: clamp(
+        9px,
+        1.8vw,
+        13px
+    );
+
+    font-weight: 800;
 
     line-height: 1.05;
 
     text-align: center;
 
+    color: white;
+
     overflow-wrap: break-word;
-    word-wrap: break-word;
-}
+
+    word-break: normal;
 
     /*
-       La distancia desde el centro se calcula
-       proporcionalmente al tamaño de la ruleta.
+       Evita que textos largos se desborden.
     */
+    max-height: 105px;
 
+    z-index: 2;
 
-/* ===== POSICIÓN DE CADA OPCIÓN ===== */
+    pointer-events: none;
 
-
-.opcion:nth-child(1) {
-    transform: rotate(15deg) translateY(clamp(-138px, -29vw, -96px)) !important;
-}
-
-.opcion:nth-child(2) {
-    transform: rotate(45deg) translateY(clamp(-138px, -29vw, -96px));
-}
-
-.opcion:nth-child(3) {
-    transform: rotate(75deg) translateY(clamp(-138px, -29vw, -96px));
-}
-
-.opcion:nth-child(4) {
-    transform: rotate(105deg) translateY(clamp(-138px, -29vw, -96px));
-}
-
-.opcion:nth-child(5) {
-    transform: rotate(135deg) translateY(clamp(-138px, -29vw, -96px));
-}
-
-.opcion:nth-child(6) {
-    transform: rotate(165deg) translateY(clamp(-138px, -29vw, -96px));
-}
-
-.opcion:nth-child(7) {
-    transform: rotate(195deg) translateY(clamp(-138px, -29vw, -96px));
-}
-
-.opcion:nth-child(8) {
-    transform: rotate(225deg) translateY(clamp(-138px, -29vw, -96px));
-}
-
-.opcion:nth-child(9) {
-    transform: rotate(255deg) translateY(clamp(-138px, -29vw, -96px));
-}
-
-.opcion:nth-child(10) {
-    transform: rotate(285deg) translateY(clamp(-138px, -29vw, -96px));
-}
-
-.opcion:nth-child(11) {
-    transform: rotate(315deg) translateY(clamp(-138px, -29vw, -96px));
-}
-
-.opcion:nth-child(12) {
-    transform: rotate(345deg) translateY(clamp(-138px, -29vw, -96px));
+    /*
+       El JS coloca automáticamente
+       el ángulo de cada texto.
+    */
+    transform-origin: center center;
 }
 
 
-/* ===== FLECHA ===== */
+/* ==================================================
+   FLECHA
+================================================== */
 
 .flecha {
     position: absolute;
 
-    /*
-       Se adapta al tamaño de pantalla.
-    */
-    top: clamp(-8px, -1vw, -5px);
+    top: -8px;
+    left: 50%;
 
-    font-size: clamp(32px, 8vw, 45px);
+    transform:
+        translateX(-50%);
+
+    font-size: clamp(
+        40px,
+        7vw,
+        60px
+    );
 
     color: white;
 
-    z-index: 10;
+    z-index: 20;
 
-    text-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+    text-shadow:
+        0 4px 7px
+        rgba(0, 0, 0, 0.45);
+
+    pointer-events: none;
 }
 
 
-/* ===== BOTÓN GIRAR ===== */
-
-{
-    margin-top: 30px;
-
-    padding: 15px 45px;
-
-    border: none;
-    border-radius: 30px;
-
-    background-color: white;
-    color: #764ba2;
-
-    font-size: clamp(16px, 4vw, 20px);
-    font-weight: bold;
-
-    cursor: pointer;
-
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-
-    transition: 0.3s;
-
-    /*
-       Evita que el botón se salga de pantallas pequeñas.
-    */
-    max-width: 90vw;
-}
-
-#girar:hover {
-    transform: scale(1.08);
-    background-color: #f1f1f1;
-}
-
-
-/* ===== RESULTADO ===== */
+/* ==================================================
+   RESULTADO DE ABAJO
+================================================== */
 
 .resultado {
-    width: min(500px, 90vw);
+    width: min(
+        620px,
+        92vw
+    );
 
-    background-color: rgba(255, 255, 255, 0.15);
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.16
+        );
 
-    padding: 20px 30px;
+    padding:
+        22px 30px;
 
-    border-radius: 15px;
+    border-radius:
+        18px;
 
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 5px 18px
+        rgba(
+            0,
+            0,
+            0,
+            0.2
+        );
 
-    /*
-       Permite que el texto se adapte.
-    */
-    overflow-wrap: break-word;
+    overflow-wrap:
+        break-word;
 }
 
 .resultado h2 {
-    margin-bottom: 10px;
-    font-size: clamp(20px, 4vw, 26px);
+    margin-bottom:
+        10px;
+
+    font-size:
+        clamp(
+            24px,
+            4vw,
+            32px
+        );
 }
 
 #resultado-texto {
-    font-size: clamp(15px, 3vw, 18px);
-    font-weight: bold;
+    font-size:
+        clamp(
+            16px,
+            2.5vw,
+            20px
+        );
+
+    font-weight:
+        bold;
 }
 
 
-/* ===== PIE DE PÁGINA ===== */
+/* ==================================================
+   FOOTER
+================================================== */
 
 footer {
-    margin-top: 40px;
-    padding: 20px;
+    margin-top:
+        20px;
 
-    background-color: rgba(0, 0, 0, 0.2);
+    padding:
+        20px;
 
-    font-size: clamp(14px, 2.5vw, 16px);
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.15
+        );
 }
 
 
-/* ================================================= */
-/* ===== CELULARES PEQUEÑOS ======================== */
-/* ================================================= */
-
-@media (max-width: 360px) 
-
-    header {
-        padding: 20px 10px 15px;
-    }
-
-    main {
-        padding: 0 10px;
-        gap: 25px;
-    }
-
-    .ruleta {
-        width: 85vw;
-        height: 85vw;
-    }
-
-    .opcion {
-        font-size: 10px;
-        width: 60px;
-    }
-
- .opcion:nth-child(1),
- .opcion:nth-child(2),
- .opcion:nth-child(3),
- .opcion:nth-child(4),
- .opcion:nth-child(5),
- .opcion:nth-child(6),
- .opcion:nth-child(7),
- .opcion:nth-child(8),
- .opcion:nth-child(9),
- .opcion:nth-child(10),
- .opcion:nth-child(11),
- .opcion:nth-child(12) {
-    transform-origin: center;
-}
-}
-    }
-
-    #girar {
-        padding: 13px 35px;
-    }
-
-    .resultado {
-        padding: 18px 15px;
-    }
-}
-
-
-/* ================================================= */
-/* ===== TABLETS =================================== */
-/* ================================================= */
-
-@media (min-width: 501px) and (max-width: 900px) {
-
-    .ruleta {
-        width: min(400px, 65vw);
-        height: min(400px, 65vw);
-    }
-
-    main {
-        gap: 35px;
-    }
-}
-
-
-/* ================================================= */
-/* ===== PANTALLAS GRANDES ========================= */
-/* ================================================= */
-
-@media (min-width: 1200px) {
-
-    main {
-        gap: 35px;
-    }
-
-    .ruleta {
-        width: 400px;
-        height: 400px;
-    }
-}
-
-
-/* ================================================= */
-/* ===== EVITAR ANIMACIONES SI EL USUARIO LO PIDE == */
-/* ================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .ruleta {
-        transition: none;
-    }
-
-    #girar {
-        transition: none;
-    }
-}
-```
-/* ========================================= */
-/* ===== LOGO DE LA IGLESIA ================ */
-/* ========================================= */
-
-#logotipo {
-    position: fixed !important;
-
-    width: 45px !important;
-    height: 45px !important;
-
-    max-width: 45px !important;
-    max-height: 45px !important;
-
-    top: 15px !important;
-    right: 15px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    object-fit: contain !important;
-
-    display: block !important;
-
-    z-index: 99999 !important;
-
-    pointer-events: none;
-
-    filter: drop-shadow(
-        0 2px 4px rgba(0, 0, 0, 0.35)
-    );
-}
-
-
-/* ===== CELULAR ===== */
-
-@media (max-width: 600px) {
-
-    #logotipo {
-
-        width: 35px !important;
-        height: 35px !important;
-
-        max-width: 35px !important;
-        max-height: 35px !important;
-
-        top: 10px !important;
-        right: 10px !important;
-    }
-}
-
-}
-/* ===== RULETA INTERACTIVA ===== */
-
-.ruleta {
-    cursor: grab;
-
-    user-select: none;
-    -webkit-user-select: none;
-
-    touch-action: none;
-}
-
-.ruleta:active {
-    cursor: grabbing;
-}
-
-
-/* ===== INSTRUCCIÓN ===== */
-
-.instruccion {
-    margin-top: 18px;
-
-    font-size: 15px;
-    font-weight: bold;
-
-    opacity: 0.9;
-}
-
-
-/* ===== CELULAR ===== */
-
-@media (max-width: 600px) {
-
-    .instruccion {
-        font-size: 13px;
-        margin-top: 15px;
-    }
-
-}
-.ruleta {
-    cursor: grab;
-
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-
-    touch-action: none;
-
-    transition: none;
-}
-
-.ruleta:active {
-    cursor: grabbing;
-}
-/* ================================================= */
-/* ===== VENTANA SORPRESA DEL RESULTADO ============ */
-/* ================================================= */
+/* ==================================================
+   POPUP RESULTADO
+================================================== */
 
 #popup-resultado {
     position: fixed;
@@ -498,59 +302,96 @@ footer {
     width: 100%;
     height: 100%;
 
-    background: rgba(0, 0, 0, 0.75);
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.78
+        );
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    z-index: 10000;
-
     padding: 20px;
+
+    z-index: 10000;
 
     opacity: 0;
 
     pointer-events: none;
 
-    transition: opacity 0.3s ease;
+    transition:
+        opacity
+        0.3s ease;
 }
 
 
-/* ===== MOSTRAR ===== */
+/* MOSTRAR POPUP */
 
 #popup-resultado.mostrar {
     opacity: 1;
 
-    pointer-events: auto;
+    pointer-events:
+        auto;
 }
 
 
-/* ===== CAJA ===== */
+/* ==================================================
+   CAJA DEL POPUP
+================================================== */
 
 .popup-contenido {
     position: relative;
 
-    width: min(600px, 90vw);
+    width:
+        min(
+            650px,
+            92vw
+        );
 
-    padding: 50px 30px;
+    max-height:
+        90vh;
 
-    border-radius: 30px;
+    overflow-y:
+        auto;
 
-    background: linear-gradient(
-        135deg,
-        #667eea,
-        #764ba2
-    );
+    padding:
+        45px
+        45px
+        35px;
+
+    border-radius:
+        30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #667eea,
+            #764ba2
+        );
 
     box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.5);
+        0 20px 60px
+        rgba(
+            0,
+            0,
+            0,
+            0.5
+        );
 
-    text-align: center;
+    text-align:
+        center;
 
-    transform: scale(0.5) rotate(-5deg);
+    transform:
+        scale(0.5)
+        rotate(-5deg);
 
     transition:
-        transform 0.5s cubic-bezier(
+        transform
+        0.5s
+        cubic-bezier(
             0.175,
             0.885,
             0.32,
@@ -559,110 +400,184 @@ footer {
 }
 
 
-/* ===== ANIMACIÓN DE ENTRADA ===== */
+#popup-resultado.mostrar
+.popup-contenido {
 
-#popup-resultado.mostrar .popup-contenido {
-
-    transform: scale(1) rotate(0deg);
-
+    transform:
+        scale(1)
+        rotate(0deg);
 }
 
 
-/* ===== BOTÓN X ===== */
+/* ==================================================
+   BOTÓN X
+================================================== */
 
 #cerrar-resultado {
+    position:
+        absolute;
 
-    position: absolute;
+    top:
+        15px;
 
-    top: 12px;
-    right: 15px;
+    right:
+        15px;
 
-    width: 45px;
-    height: 45px;
+    width:
+        48px;
 
-    border: none;
+    height:
+        48px;
 
-    border-radius: 50%;
+    border:
+        none;
 
-    background: rgba(255, 255, 255, 0.2);
+    border-radius:
+        50%;
 
-    color: white;
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.22
+        );
 
-    font-size: 25px;
+    color:
+        white;
 
-    font-weight: bold;
+    font-size:
+        26px;
 
-    cursor: pointer;
+    font-weight:
+        bold;
 
-    transition: 0.2s;
+    cursor:
+        pointer;
+
+    z-index:
+        50;
+
+    transition:
+        0.2s;
 }
 
 
 #cerrar-resultado:hover {
+    background:
+        white;
 
-    background: white;
+    color:
+        #764ba2;
 
-    color: #764ba2;
-
-    transform: rotate(90deg) scale(1.1);
-
+    transform:
+        rotate(90deg)
+        scale(1.08);
 }
 
 
-/* ===== ICONO ===== */
+/* ==================================================
+   ICONO DEL POPUP
+================================================== */
 
 .popup-icono {
+    font-size:
+        clamp(
+            55px,
+            8vw,
+            80px
+        );
 
-    font-size: 80px;
+    margin-bottom:
+        10px;
 
-    margin-bottom: 10px;
-
-    animation: rebote 1s infinite alternate;
+    animation:
+        rebote
+        1s
+        infinite
+        alternate;
 }
 
 
 @keyframes rebote {
 
     from {
-        transform: translateY(0);
+        transform:
+            translateY(0);
     }
 
     to {
-        transform: translateY(-12px);
+        transform:
+            translateY(-10px);
     }
 
 }
 
 
-/* ===== TITULO ===== */
+/* ==================================================
+   TÍTULO DEL POPUP
+================================================== */
 
 .popup-contenido h2 {
+    font-size:
+        clamp(
+            28px,
+            5vw,
+            46px
+        );
 
-    font-size: clamp(
-        28px,
-        6vw,
-        50px
-    );
-
-    margin-bottom: 15px;
-
+    margin-bottom:
+        15px;
 }
 
 
-/* ===== RESULTADO GRANDE ===== */
+/* ==================================================
+   RESULTADO GRANDE
+================================================== */
 
 #resultado-grande {
-    font-size: clamp(22px, 6vw, 42px);
-    font-weight: 900;
-    text-transform: uppercase;
-    margin: 20px 0;
-    line-height: 1.1;
-    text-align: center;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    padding: 0 20px;
-    text-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-    animation: aparecerResultado 0.7s
+    font-size:
+        clamp(
+            21px,
+            4.5vw,
+            40px
+        );
+
+    font-weight:
+        900;
+
+    text-transform:
+        uppercase;
+
+    line-height:
+        1.12;
+
+    margin:
+        20px
+        0;
+
+    padding:
+        0
+        15px;
+
+    overflow-wrap:
+        break-word;
+
+    word-break:
+        normal;
+
+    text-shadow:
+        0 4px 8px
+        rgba(
+            0,
+            0,
+            0,
+            0.4
+        );
+
+    animation:
+        aparecerResultado
+        0.7s
         cubic-bezier(
             0.175,
             0.885,
@@ -675,128 +590,261 @@ footer {
 @keyframes aparecerResultado {
 
     0% {
+        transform:
+            scale(0);
 
-        transform: scale(0);
-
-        opacity: 0;
-
+        opacity:
+            0;
     }
 
     70% {
+        transform:
+            scale(1.08);
 
-        transform: scale(1.2);
-
-        opacity: 1;
-
+        opacity:
+            1;
     }
 
     100% {
-
-        transform: scale(1);
-
+        transform:
+            scale(1);
     }
 
 }
 
 
-/* ===== CONFETI ===== */
+/* ==================================================
+   CONFETI
+================================================== */
 
 .popup-confeti {
+    font-size:
+        34px;
 
-    font-size: 35px;
+    margin-top:
+        15px;
 
-    margin-top: 15px;
-
-    animation: confeti 1s infinite alternate;
-
+    animation:
+        confeti
+        1s
+        infinite
+        alternate;
 }
 
 
 @keyframes confeti {
 
     from {
-        transform: scale(1);
+        transform:
+            scale(1);
     }
 
     to {
-        transform: scale(1.15);
+        transform:
+            scale(1.12);
     }
 
 }
 
 
-/* ===== CELULAR ===== */
+/* ==================================================
+   LOGO
+================================================== */
+
+body > img {
+    position:
+        fixed !important;
+
+    width:
+        70px !important;
+
+    height:
+        70px !important;
+
+    top:
+        12px !important;
+
+    right:
+        8px !important;
+
+    object-fit:
+        contain !important;
+
+    z-index:
+        9999 !important;
+
+    pointer-events:
+        none;
+}
+
+
+/* ==================================================
+   CELULARES
+================================================== */
 
 @media (max-width: 600px) {
 
-    .popup-contenido {
-
-        padding: 45px 20px;
-
-        border-radius: 25px;
-
+    header {
+        padding:
+            10px
+            55px
+            15px
+            10px;
     }
+
+    header h1 {
+        font-size:
+            clamp(
+                22px,
+                7vw,
+                30px
+            );
+    }
+
+
+    /*
+        La ruleta ocupa casi toda
+        la pantalla del celular.
+    */
+
+    .ruleta {
+        width:
+            96vw;
+
+        height:
+            96vw;
+
+        max-width:
+            500px;
+
+        max-height:
+            500px;
+    }
+
+
+    .ruleta-container {
+        max-width:
+            100%;
+    }
+
+
+    .opcion {
+        width:
+            clamp(
+                55px,
+                15vw,
+                72px
+            );
+
+        font-size:
+            clamp(
+                8px,
+                2.4vw,
+                10px
+            );
+
+        line-height:
+            1;
+    }
+
+
+    .resultado {
+        width:
+            94vw;
+
+        padding:
+            18px
+            15px;
+    }
+
+
+    .popup-contenido {
+        width:
+            94vw;
+
+        max-height:
+            88vh;
+
+        padding:
+            55px
+            22px
+            30px;
+
+        border-radius:
+            24px;
+    }
+
+
+    #resultado-grande {
+        font-size:
+            clamp(
+                18px,
+                6vw,
+                28px
+            );
+
+        line-height:
+            1.08;
+
+        padding:
+            0
+            15px;
+    }
+
 
     .popup-icono {
-
-        font-size: 60px;
-
+        font-size:
+            55px;
     }
+
 
     #cerrar-resultado {
+        width:
+            43px;
 
-        width: 40px;
-        height: 40px;
+        height:
+            43px;
 
-        font-size: 22px;
+        font-size:
+            23px;
 
+        top:
+            10px;
+
+        right:
+            10px;
+    }
+
+
+    body > img {
+        width:
+            48px !important;
+
+        height:
+            48px !important;
+
+        top:
+            8px !important;
+
+        right:
+            5px !important;
     }
 
 }
-/* =========================================
-   LOGO - FORZAR TAMAÑO Y POSICIÓN
-   ========================================= */
 
-body > img {
-    position: fixed !important;
 
-    width: 70px !important;
-    height: 70px !important;
+/* ==================================================
+   COMPUTADORAS GRANDES
+================================================== */
 
-    min-width: 70px !important;
-    min-height: 70px !important;
+@media (min-width: 1100px) {
 
-    max-width: 70px !important;
-    max-height: 70px !important;
+    .ruleta {
+        width:
+            620px;
 
-    top: 12px !important;
-    right: 6px !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    object-fit: contain !important;
-
-    display: block !important;
-
-    z-index: 999999 !important;
-}
-/* ===== LOGO MÁS PEQUEÑO EN CELULAR ===== */
-
-@media (max-width: 40px) {
-
-    body > img {
-        width: 40px !important;
-        height: 40px !important;
-
-        min-width: 40px !important;
-        min-height: 40px !important;
-
-        max-width: 40px !important;
-        max-height: 40px !important;
-
-        top: 10px !important;
-        right: 5px !important;
+        height:
+            620px;
     }
 
 }

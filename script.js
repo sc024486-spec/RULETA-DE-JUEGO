@@ -1,79 +1,193 @@
-const ruleta = document.querySelector(".ruleta");
-const resultadoTexto = document.getElementById("resultado-texto");
+const ruleta =
+    document.querySelector(".ruleta");
 
+const resultadoTexto =
+    document.getElementById(
+        "resultado-texto"
+    );
 
-// ==================================================
-// OPCIONES
-// ==================================================
-
-// Tomar automáticamente las opciones del HTML
 const elementosOpciones =
-    document.querySelectorAll(".ruleta .opcion");
-
-const opciones =
-    Array.from(elementosOpciones).map(
-        opcion => opcion.textContent.trim()
+    Array.from(
+        document.querySelectorAll(
+            ".ruleta .opcion"
+        )
     );
 
 
 // ==================================================
-// CONFIGURAR LAS OPCIONES EN LA RULETA
+// DATOS AUTOMÁTICOS
 // ==================================================
 
-// Como ahora son 12:
-// 360 / 12 = 30 grados por opción
+const opciones =
+    elementosOpciones.map(
+        opcion =>
+            opcion.textContent.trim()
+    );
+
+
+// Funciona con 13, 14, 15...
+const cantidadOpciones =
+    opciones.length;
+
 const gradosSegmento =
-    360 / opciones.length;
+    360 /
+    cantidadOpciones;
 
 
-// Colocar cada texto en el centro de su segmento
-elementosOpciones.forEach(
-    (opcion, indice) => {
+// ==================================================
+// COLORES
+// ==================================================
 
-        const angulo =
-            (indice * gradosSegmento) +
-            (gradosSegmento / 2);
+const colores = [
+    "#ff595e",
+    "#ffca3a",
+    "#8ac926",
+    "#1982c4",
+    "#6a4c93"
+];
 
-        opcion.style.transform =
-            `rotate(${angulo}deg)
-             translateY(clamp(-138px, -29vw, -96px))`;
 
-        opcion.style.transformOrigin =
-            "center";
+// ==================================================
+// CREAR SEGMENTOS AUTOMÁTICAMENTE
+// ==================================================
+
+function crearRuleta() {
+
+    const segmentos = [];
+
+    for (
+        let i = 0;
+        i < cantidadOpciones;
+        i++
+    ) {
+
+        const inicio =
+            i *
+            gradosSegmento;
+
+        const final =
+            (i + 1) *
+            gradosSegmento;
+
+        const color =
+            colores[
+                i %
+                colores.length
+            ];
+
+
+        segmentos.push(
+            `${color} ${inicio}deg ${final}deg`
+        );
 
     }
+
+
+    ruleta.style.background =
+        `conic-gradient(${segmentos.join(",")})`;
+
+}
+
+
+// ==================================================
+// COLOCAR TEXTOS
+// ==================================================
+
+function colocarTextos() {
+
+    const tamañoRuleta =
+        ruleta.offsetWidth;
+
+
+    /*
+        Distancia del texto desde
+        el centro de la ruleta.
+    */
+
+    const radio =
+        tamañoRuleta *
+        0.355;
+
+
+    elementosOpciones.forEach(
+        (opcion, indice) => {
+
+            /*
+                Colocar el texto justo
+                en el centro del segmento.
+            */
+
+            const angulo =
+                indice *
+                gradosSegmento +
+                gradosSegmento /
+                2;
+
+
+            opcion.style.transform =
+                `rotate(${angulo}deg)
+                 translateY(-${radio}px)`;
+
+        }
+    );
+
+}
+
+
+// ==================================================
+// CONSTRUIR RULETA
+// ==================================================
+
+crearRuleta();
+
+colocarTextos();
+
+
+// Volver a colocar textos si cambia
+// el tamaño de la pantalla
+
+window.addEventListener(
+    "resize",
+    colocarTextos
 );
 
 
 // ==================================================
-// VARIABLES DE LA RULETA
+// VARIABLES
 // ==================================================
 
-let rotacion = 0;
+let rotacion =
+    0;
 
-let arrastrando = false;
+let arrastrando =
+    false;
 
-let ultimoX = 0;
-let ultimoY = 0;
+let ultimoX =
+    0;
 
-let velocidad = 0;
+let ultimoY =
+    0;
 
-let animacion = null;
+let velocidad =
+    0;
+
+let animacion =
+    null;
+
+
+// ==================================================
+// AUDIO
+// ==================================================
+
+let audioContext =
+    null;
+
+let ultimoSegmento =
+    0;
 
 
 // ==================================================
 // SONIDO CLAC
-// ==================================================
-
-let audioContext = null;
-
-
-// Segmento anterior
-let ultimoSegmento = 0;
-
-
-// ==================================================
-// CREAR SONIDO
 // ==================================================
 
 function sonidoClac() {
@@ -85,6 +199,7 @@ function sonidoClac() {
                 window.AudioContext ||
                 window.webkitAudioContext
             )();
+
     }
 
 
@@ -110,33 +225,36 @@ function sonidoClac() {
         audioContext.createGain();
 
 
-    // Sonido tipo CLAC
     oscilador.type =
         "square";
 
 
-    oscilador.frequency.setValueAtTime(
-        1200,
-        ahora
-    );
+    oscilador.frequency
+        .setValueAtTime(
+            1200,
+            ahora
+        );
 
 
-    oscilador.frequency.exponentialRampToValueAtTime(
-        500,
-        ahora + 0.04
-    );
+    oscilador.frequency
+        .exponentialRampToValueAtTime(
+            500,
+            ahora + 0.04
+        );
 
 
-    ganancia.gain.setValueAtTime(
-        0.18,
-        ahora
-    );
+    ganancia.gain
+        .setValueAtTime(
+            0.18,
+            ahora
+        );
 
 
-    ganancia.gain.exponentialRampToValueAtTime(
-        0.001,
-        ahora + 0.05
-    );
+    ganancia.gain
+        .exponentialRampToValueAtTime(
+            0.001,
+            ahora + 0.05
+        );
 
 
     oscilador.connect(
@@ -157,11 +275,12 @@ function sonidoClac() {
     oscilador.stop(
         ahora + 0.05
     );
+
 }
 
 
 // ==================================================
-// COMPROBAR SI PASÓ UN SEGMENTO
+// COMPROBAR SEGMENTO
 // ==================================================
 
 function comprobarClac() {
@@ -184,11 +303,12 @@ function comprobarClac() {
             segmentoActual;
 
     }
+
 }
 
 
 // ==================================================
-// INICIO DEL ARRASTRE
+// INICIAR ARRASTRE
 // ==================================================
 
 ruleta.addEventListener(
@@ -198,7 +318,6 @@ ruleta.addEventListener(
         e.preventDefault();
 
 
-        // Activar audio después de interacción
         if (!audioContext) {
 
             audioContext =
@@ -220,7 +339,6 @@ ruleta.addEventListener(
         }
 
 
-        // Detener inercia anterior
         cancelAnimationFrame(
             animacion
         );
@@ -240,7 +358,6 @@ ruleta.addEventListener(
             e.clientY;
 
 
-        // Capturar dedo / mouse
         ruleta.setPointerCapture(
             e.pointerId
         );
@@ -254,15 +371,16 @@ ruleta.addEventListener(
 
 
 // ==================================================
-// MOVER LA RULETA
+// MOVER RULETA
 // ==================================================
 
 ruleta.addEventListener(
     "pointermove",
     function (e) {
 
-        if (!arrastrando)
+        if (!arrastrando) {
             return;
+        }
 
 
         e.preventDefault();
@@ -274,15 +392,16 @@ ruleta.addEventListener(
 
         const centroX =
             rect.left +
-            rect.width / 2;
+            rect.width /
+            2;
 
 
         const centroY =
             rect.top +
-            rect.height / 2;
+            rect.height /
+            2;
 
 
-        // Posición anterior
         const x1 =
             ultimoX -
             centroX;
@@ -292,7 +411,6 @@ ruleta.addEventListener(
             centroY;
 
 
-        // Posición actual
         const x2 =
             e.clientX -
             centroX;
@@ -302,7 +420,6 @@ ruleta.addEventListener(
             centroY;
 
 
-        // Ángulo anterior
         let angulo1 =
             Math.atan2(
                 y1,
@@ -310,7 +427,6 @@ ruleta.addEventListener(
             );
 
 
-        // Ángulo actual
         let angulo2 =
             Math.atan2(
                 y2,
@@ -318,20 +434,19 @@ ruleta.addEventListener(
             );
 
 
-        // Diferencia
         let diferencia =
             angulo2 -
             angulo1;
 
 
-        // Corregir salto
         if (
             diferencia >
             Math.PI
         ) {
 
             diferencia -=
-                Math.PI * 2;
+                Math.PI *
+                2;
 
         }
 
@@ -342,19 +457,18 @@ ruleta.addEventListener(
         ) {
 
             diferencia +=
-                Math.PI * 2;
+                Math.PI *
+                2;
 
         }
 
 
-        // Convertir a grados
         const grados =
             diferencia *
             180 /
             Math.PI;
 
 
-        // Girar
         rotacion +=
             grados;
 
@@ -363,16 +477,8 @@ ruleta.addEventListener(
             `rotate(${rotacion}deg)`;
 
 
-        // ==========================================
-        // SONIDO
-        // ==========================================
-
         comprobarClac();
 
-
-        // ==========================================
-        // VELOCIDAD
-        // ==========================================
 
         velocidad =
             grados;
@@ -396,8 +502,9 @@ ruleta.addEventListener(
     "pointerup",
     function (e) {
 
-        if (!arrastrando)
+        if (!arrastrando) {
             return;
+        }
 
 
         arrastrando =
@@ -413,8 +520,6 @@ ruleta.addEventListener(
         }
         catch (error) {
 
-            // No hacer nada
-
         }
 
 
@@ -422,16 +527,11 @@ ruleta.addEventListener(
             "grab";
 
 
-        // ==========================================
-        // IMPULSO
-        // ==========================================
-
         let impulso =
             velocidad *
             1.8;
 
 
-        // Limitar velocidad
         if (
             impulso >
             20
@@ -454,7 +554,6 @@ ruleta.addEventListener(
         }
 
 
-        // Si casi no se movió
         if (
             Math.abs(impulso) <
             0.2
@@ -486,6 +585,7 @@ ruleta.addEventListener(
         arrastrando =
             false;
 
+
         ruleta.style.cursor =
             "grab";
 
@@ -507,13 +607,10 @@ function iniciarInercia(
 
     function animar() {
 
-
-        // Reducir velocidad
         impulso *=
             friccion;
 
 
-        // Girar
         rotacion +=
             impulso;
 
@@ -522,16 +619,8 @@ function iniciarInercia(
             `rotate(${rotacion}deg)`;
 
 
-        // ==========================================
-        // CLAC
-        // ==========================================
-
         comprobarClac();
 
-
-        // ==========================================
-        // DETENER
-        // ==========================================
 
         if (
             Math.abs(impulso) <
@@ -572,24 +661,38 @@ function iniciarInercia(
 
 function mostrarResultado() {
 
-    // Normalizar rotación entre 0 y 360
+    /*
+        Convertir la rotación
+        a un valor entre 0 y 360.
+    */
+
     const rotacionNormalizada =
         (
-            (rotacion % 360) +
+            (
+                rotacion %
+                360
+            ) +
             360
-        ) % 360;
+        ) %
+        360;
 
 
-    // Saber qué parte está debajo de la flecha
+    /*
+        La flecha está arriba.
+    */
+
     const posicion =
         (
             360 -
             rotacionNormalizada
-        ) % 360;
+        ) %
+        360;
 
 
-    // Ahora usa automáticamente 30 grados
-    // porque existen 12 opciones
+    /*
+        Saber qué opción cayó.
+    */
+
     let numero =
         Math.floor(
             posicion /
@@ -597,35 +700,33 @@ function mostrarResultado() {
         );
 
 
-    // Seguridad
-    if (
-        numero >=
-        opciones.length
-    ) {
+    /*
+        Seguridad.
+    */
 
-        numero =
-            0;
-
-    }
+    numero =
+        numero %
+        cantidadOpciones;
 
 
     const resultado =
-        opciones[numero];
+        opciones[
+            numero
+        ];
 
 
-    // ==========================================
+    // ==================================================
     // RESULTADO DE ABAJO
-    // ==========================================
+    // ==================================================
 
     resultadoTexto.textContent =
         "🎉 ¡Te salió: " +
-        resultado +
-        "!";
+        resultado;
 
 
-    // ==========================================
-    // VENTANA GRANDE
-    // ==========================================
+    // ==================================================
+    // POPUP
+    // ==================================================
 
     const popup =
         document.getElementById(
@@ -658,7 +759,7 @@ function mostrarResultado() {
 
 
 // ==================================================
-// CERRAR VENTANA
+// CERRAR POPUP
 // ==================================================
 
 const popup =
@@ -692,7 +793,7 @@ if (
 
 
 // ==================================================
-// EVITAR ARRASTRAR
+// EVITAR ARRASTRAR ELEMENTOS
 // ==================================================
 
 ruleta.addEventListener(
